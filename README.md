@@ -198,6 +198,8 @@ outdir: '/path/to/save/results'
 > ```nextflow
 > // Set your work directory to a folder on the /active partition
 > workDir = '/active/<project_id>/nobackup/work'
+> // Set Interproscan database path 
+> interproscan_db = '/path/to/interproscan/db/data'
 > // Restart workflows from last successful execution (i.e. use cached results where possible).
 > resume = true
 > // Add any overriding process directives here, e.g.,
