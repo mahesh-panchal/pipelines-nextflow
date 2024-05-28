@@ -16,7 +16,15 @@ genome: '/path/to/genome/assembly.fasta'
 gff_annotation: '/path/to/annotation.gff3'
 blast_db_fasta: '/path/to/protein/database.fasta'
 outdir: '/path/to/save/results'
+db_cache: '/path/to/save/interproscan_db/'
 ```
+
+> [!IMPORTANT]  
+> The Interproscan database is huge. If you supply `db_cache` then it will be downloaded
+> once and saved in that directory. Setting your `db_cache` to this path for every run
+> will then reuse this folder to supply the Interproscan database without re-extracting it again.
+>
+> Alternatively, set `interproscan_database` to point to the local path of the interproscan database.
 
 Command line:
 
@@ -37,6 +45,9 @@ nextflow run NBISweden/pipelines-nextflow \
   - `blast_db_fasta` : Path to blast protein database fasta.
   - `merge_annotation_identifier`: The identifier to use for labeling genes (default: NBIS).
   - `use_pcds`: If true, enables the pcds flag when merging annotation.
+  - `interproscan_database`: Path to interproscan database, if this is a `tar.gz`, the file will be extracted under
+    `db_cache` and saved for future use.
+  - `db_cahce`: The path to save the untarred Interproscan database archive.
 
 ### Tool specific parameters
 
