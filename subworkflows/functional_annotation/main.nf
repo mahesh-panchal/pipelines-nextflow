@@ -1,7 +1,8 @@
 include { BLAST_MAKEBLASTDB                                              } from "$projectDir/modules/nf-core/blast/makeblastdb/main"
 include { AGAT_EXTRACTSEQUENCES as GFF2PROTEIN                           } from "$projectDir/modules/local/agat/extractsequences"
 include { BLAST_BLASTP                                                   } from "$projectDir/modules/local/blast/blastp"
-include { INTERPROSCAN                                                   } from "$projectDir/modules/nf-core/interproscan"
+include { INTERPROSCAN                                                   } from "$projectDir/modules/local/interproscan"
+// include { INTERPROSCAN                                                   } from "$projectDir/modules/nf-core/interproscan"
 include { AGAT_MANAGEFUNCTIONALANNOTATION as MERGE_FUNCTIONAL_ANNOTATION } from "$projectDir/modules/local/agat/managefunctionalannotation"
 
 workflow FUNCTIONAL_ANNOTATION {
@@ -31,6 +32,12 @@ workflow FUNCTIONAL_ANNOTATION {
                 return [ [ db: fasta.baseName ] , db_files ]
         }.set { ch_blast_fa }
 
+    
+    if ( params.interproscan_database.endsWith('.tar.gz') ){
+        ch_interpro_db = 
+    } else {
+        ch_interpro_db = Channel.fromPath(params.interproscan_database, checkIfExists: true)
+    }
     BLAST_MAKEBLASTDB(
         ch_blast_fa.make_db
     )
@@ -45,7 +52,7 @@ workflow FUNCTIONAL_ANNOTATION {
     )
     INTERPROSCAN( 
         GFF2PROTEIN.out.proteins.splitFasta( by: params.records_per_file, file: true ),
-        'tsv'
+        file()
     )
     MERGE_FUNCTIONAL_ANNOTATION(
         gff_file,
