@@ -28,9 +28,9 @@ workflow FUNCTIONAL_ANNOTATION {
                 // No database files found matching the glob pattern
             }
             make_db : db_files.size() == 1
-                return [ [ db: fasta.baseName ] , db_files ]
+                return [ [ id: fasta.baseName ] , db_files ]
             with_db : db_files.size() > 1
-                return [ [ db: fasta.baseName ] , db_files ]
+                return [ [ id: fasta.baseName ] , db_files ]
         }.set { ch_blast_fa }
 
     if ( params.interproscan_database?.endsWith('.tar.gz') ){
