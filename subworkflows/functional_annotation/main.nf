@@ -36,7 +36,7 @@ workflow FUNCTIONAL_ANNOTATION {
     if ( params.interproscan_database?.endsWith('.tar.gz') ){
         UNTAR( 
             Channel.fromPath(params.interproscan_database, checkIfExists: true)
-                .map { db -> [ [id: db.baseName(2) ], db ] }
+                .map { db -> [ [id: db.getBaseName(2) ], db ] }
         )
         .untar.set { ch_interpro_db }
     } else if ( params.interproscan_database ) {
