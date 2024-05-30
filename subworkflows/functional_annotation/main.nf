@@ -37,8 +37,9 @@ workflow FUNCTIONAL_ANNOTATION {
         UNTAR( 
             Channel.fromPath(params.interproscan_database, checkIfExists: true)
                 .map { db -> [ [id: db.getBaseName(2) ], db ] }
-        )
-        .untar.set { ch_interpro_db }
+        ).untar
+        .map { meta, db -> db }
+        .set { ch_interpro_db }
     } else if ( params.interproscan_database ) {
         Channel.fromPath(params.interproscan_database, checkIfExists: true)
             .set { ch_interpro_db }
