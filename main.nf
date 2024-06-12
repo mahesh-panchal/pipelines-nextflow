@@ -18,7 +18,7 @@ workflow {
 
     '''
 
-    def valid_subworkflows = [ 'abinitio_training', 'annotation_preprocessing', 'functional_annotation', 'transcript_assembly' ]
+    def valid_subworkflows = [ 'abinitio_training', 'annotation_preprocessing', 'functional_annotation', 'transcript_assembly', 'format_validation' ]
     if( ! params.subworkflow in valid_subworkflows ){
         error """
         The parameter 'subworkflow' (value: ${params.subworkflow}) is not a valid subworkflow.
