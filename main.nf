@@ -1,11 +1,12 @@
 #! /usr/bin/env nextflow
 
-nextflow.enable.dsl = 2
+// nextflow.enable.dsl = 2
 
 include { ABINITIO_TRAINING        } from "$projectDir/subworkflows/abinitio_training/main"
 include { ANNOTATION_PREPROCESSING } from "$projectDir/subworkflows/annotation_preprocessing/main"
 include { FUNCTIONAL_ANNOTATION    } from "$projectDir/subworkflows/functional_annotation/main"
 include { TRANSCRIPT_ASSEMBLY      } from "$projectDir/subworkflows/transcript_assembly/main"
+include { FORMAT_VALIDATION        } from "$projectDir/subworkflows/format_validation/main"
 
 workflow {
 
@@ -40,6 +41,10 @@ workflow {
     
     if ( params.subworkflow == 'transcript_assembly' ){
         TRANSCRIPT_ASSEMBLY()
+    }
+
+    if ( params.subworkflow == 'format_validation' ) {
+        FORMAT_VALIDATION()
     }
 }
 
